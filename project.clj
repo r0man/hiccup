@@ -29,7 +29,7 @@
    :repl-listen-port 9000
    :repl-launch-commands
    {"chromium" ["chromium" "test-resources/repl.html"]
-    "firefox" ["firefox" "test-resources/repl.html" :stdout ".repl-firefox-out" :stderr ".repl-firefox-err"]
+    "firefox" ["firefox" "test-resources/repl.html"]
     "phantom" ["phantomjs" "test-resources/repl.js" "test-resources/repl.html" :stdout ".repl-phantom-out" :stderr ".repl-phantom-err"]}
-   :test-commands {"unit" ["phantomjs" "test-resources/test.js" "test-resources/test.html"]}}
+   :test-commands {"unit" ["phantomjs" "test-resources/test.js" "test-resources/test.html" :stdout ".repl-phantom-out" :stderr ".repl-phantom-err"]}}
   :extra-classpath-dirs ["src/clj"])

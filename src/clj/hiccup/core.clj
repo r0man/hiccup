@@ -9,7 +9,7 @@
   [options & content]
   (if-let [mode (and (map? options) (:mode options))]
     (binding [*html-mode* mode]
-      `(binding [*html-mode* ~mode]
+      `(binding [hiccup.compiler/*html-mode* ~mode]
          ~(apply compile-html content)))
     (apply compile-html options content)))
 
