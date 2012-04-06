@@ -1,6 +1,7 @@
 (ns hiccup.util
   ;; "Utility functions for Hiccup."
-  ;; (:require [clojure.string :as str])
+  (:require [clojure.string :as str]
+            [goog.string :as string])
   ;; (:import java.net.URI
   ;;          java.net.URLEncoder)
   )
@@ -67,19 +68,24 @@
 ;;   `(binding [*encoding* ~encoding]
 ;;      ~@body))
 
-;; (defprotocol URLEncode
-;;   (url-encode [x] "Turn a value into a URL-encoded string."))
+(defprotocol URLEncode
+  (url-encode [x] "Turn a value into a URL-encoded string."))
 
-;; (extend-protocol URLEncode
-;;   String
-;;   (url-encode [s] (URLEncoder/encode s *encoding*))
-;;   java.util.Map
-;;   (url-encode [m]
-;;     (str/join "&"
-;;       (for [[k v] m]
-;;         (str (url-encode k) "=" (url-encode v)))))
-;;   Object
-;;   (url-encode [x] (url-encode (to-str x))))
+(extend-protocol URLEncode
+  string
+  (url-encode [s]
+    (-> (js/escape (name s))
+        (str/replace "%20" "+")))
+  cljs.core.ObjMap
+  (url-encode [m]
+    (str/join "&"
+      (for [[k v] m]
+        (str (url-encode k) "=" (url-encode v)))))
+  object
+  (url-encode [x] (url-encode (to-str x))))
+
+;; (url-encode {:a "b"})
+;; (url-encode {"a" "b"})
 
 ;; (defn url
 ;;   "Creates a URL string from a variable list of arguments and an optional
