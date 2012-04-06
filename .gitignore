@@ -10,3 +10,5 @@ hiccup*.jar
 lib
 pom.xml
 target
+/.repl-phantom-err
+/.repl-phantom-out
