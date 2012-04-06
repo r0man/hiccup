@@ -41,25 +41,25 @@
   (assert (= (html [:p [:span [:a "foo"]]])
              "<p><span><a>foo</a></span></p>")))
 
-;; (deftest tag-attributes
-;;   (testing "tag with blank attribute map"
-;;     (is (= (html [:xml {}]) "<xml />")))
-;;   (testing "tag with populated attribute map"
-;;     (is (= (html [:xml {:a "1", :b "2"}]) "<xml a=\"1\" b=\"2\" />"))
-;;     (is (= (html [:img {"id" "foo"}]) "<img id=\"foo\" />"))
-;;     (is (= (html [:img {'id "foo"}]) "<img id=\"foo\" />"))
-;;     (is (= (html [:xml {:a "1", 'b "2", "c" "3"}])
-;;            "<xml a=\"1\" b=\"2\" c=\"3\" />")))
-;;   (testing "attribute values are escaped"
-;;     (is (= (html [:div {:id "\""}]) "<div id=\"&quot;\"></div>")))
-;;   (testing "boolean attributes"
-;;     (is (= (html [:input {:type "checkbox" :checked true}])
-;;            "<input checked=\"checked\" type=\"checkbox\" />"))
-;;     (is (= (html [:input {:type "checkbox" :checked false}])
-;;            "<input type=\"checkbox\" />")))
-;;   (testing "nil attributes"
-;;     (is (= (html [:span {:class nil} "foo"])
-;;            "<span>foo</span>"))))
+(defn tag-attributes []
+  ;; tag with blank attribute map
+  (assert (= (html [:xml {}]) "<xml />"))
+  ;; tag with populated attribute map
+  (assert (= (html [:xml {:a "1", :b "2"}]) "<xml a=\"1\" b=\"2\" />"))
+  (assert (= (html [:img {"id" "foo"}]) "<img id=\"foo\" />"))
+  (assert (= (html [:img {'id "foo"}]) "<img id=\"foo\" />"))
+  (assert (= (html [:xml {:a "1", 'b "2", "c" "3"}])
+             "<xml a=\"1\" b=\"2\" c=\"3\" />"))
+  ;; attribute values are escaped
+  (assert (= (html [:div {:id "\""}]) "<div id=\"&quot;\"></div>"))
+  ;; boolean attributes
+  (assert (= (html [:input {:type "checkbox" :checked true}])
+             "<input checked=\"checked\" type=\"checkbox\" />"))
+  (assert (= (html [:input {:type "checkbox" :checked false}])
+             "<input type=\"checkbox\" />"))
+  ;; nil attributes
+  (assert (= (html [:span {:class nil} "foo"])
+             "<span>foo</span>")))
 
 ;; (deftest compiled-tags
 ;;   (testing "tag content can be vars"
@@ -116,4 +116,5 @@
 
 (defn test []
   (tag-names)
-  (tag-contents))
+  (tag-contents)
+  (tag-attributes))
