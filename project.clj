@@ -6,6 +6,7 @@
   :test-paths ["test/clj"]
   :plugins [[codox "0.6.0"]
             [lein-cljsbuild "0.1.6"]]
+  :hooks [leiningen.cljsbuild]
   :codox {:exclude [hiccup.compiler]}
   :cljsbuild
   {:builds
