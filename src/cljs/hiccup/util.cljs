@@ -2,19 +2,9 @@
   ;; "Utility functions for Hiccup."
   (:require [clojure.string :as str]
             [goog.string :as string]
-            [goog.Uri :as Uri])
-  ;; (:import java.net.URI
-  ;;          java.net.URLEncoder)
-  )
+            [goog.Uri :as Uri]))
 
 (def ^:dynamic *base-url* nil)
-
-;; (defmacro with-base-url
-;;   "Sets a base URL that will be prepended onto relative URIs. Note that for this
-;;   to work correctly, it needs to be placed outside the html macro."
-;;   [base-url & body]
-;;   `(binding [*base-url* ~base-url]
-;;      ~@body))
 
 (defprotocol ToString
   (^String to-str [x] "Convert a value into a string."))
@@ -35,8 +25,6 @@
   object
   (to-str [x]
     (str x)))
-
-;; (to-str (goog.Uri. "http://example.com"))
 
 (defn ^String as-str
   "Converts its arguments into a string using to-str."

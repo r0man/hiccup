@@ -1,6 +1,7 @@
 (ns hiccup.test.util
   (:require [goog.Uri :as Uri])
-  (:use [hiccup.util :only (as-str escape-html url-encode)])
+  (:use [hiccup.util :only (as-str escape-html url-encode to-str to-uri *base-url*)])
+  (:use-macros [hiccup.macro :only (with-base-url)])
   ;; (:use clojure.test
   ;;       hiccup.util)
   ;; (:import java.net.URI)
@@ -20,17 +21,15 @@
   (assert (= (as-str "a" :b 3) "ab3"))
   (assert (= (as-str (goog.Uri. "/foo")) "/foo")))
 
-;; (deftest test-to-uri
-;;   (testing "with no base URL"
-;;     (is (= (to-str (to-uri "foo")) "foo"))
-;;     (is (= (to-str (to-uri "/foo/bar")) "/foo/bar"))
-;;     (is (= (to-str (to-uri "/foo#bar")) "/foo#bar")))
-;;   (testing "with base URL"
-;;     (with-base-url "/foo"
-;;       (is (= (to-str (to-uri "/bar")) "/foo/bar"))
-;;       (is (= (to-str (to-uri "http://example.com")) "http://example.com"))
-;;       (is (= (to-str (to-uri "bar")) "bar"))
-;;       (is (= (to-str (to-uri "../bar")) "../bar")))))
+(defn test-to-uri []
+  (assert (= (to-str (to-uri "foo")) "foo"))
+  (assert (= (to-str (to-uri "/foo/bar")) "/foo/bar"))
+  (assert (= (to-str (to-uri "/foo#bar")) "/foo#bar"))
+  (with-base-url "/foo"
+    (assert (= (to-str (to-uri "/bar")) "/foo/bar"))
+    (assert (= (to-str (to-uri "http://example.com")) "http://example.com"))
+    (assert (= (to-str (to-uri "bar")) "bar"))
+    (assert (= (to-str (to-uri "../bar")) "../bar"))))
 
 (defn test-url-encode []
   ;; strings
@@ -61,5 +60,6 @@
   (test-as-str)
   (test-escaped-chars)
   (test-url-encode)
+  (test-to-uri)
   ;; (test-url)
   )
