@@ -8,3 +8,4 @@ autodoc
 doc
 .lein-cljsbuild-compiler-*
 .lein-cljsbuild-repl
+.lein-plugins
