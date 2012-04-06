@@ -24,7 +24,7 @@
                 :optimizations :whitespace
                 :pretty-print true}
      :source-path "test/cljs"}}
-   ;; :crossovers []
+   :crossovers []
    :crossover-jar true
    :repl-listen-port 9000
    :repl-launch-commands
