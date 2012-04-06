@@ -16,18 +16,18 @@
 
 (defn- render-attribute [[name value]]
   (cond
-    (true? value)
-      (if (xml-mode?)
-        (xml-attribute name name)
-        (str " " (as-str name)))
-    (not value)
-      ""
-    :else
-      (xml-attribute name value)))
+   (true? value)
+   (if (xml-mode?)
+     (xml-attribute name name)
+     (str " " (as-str name)))
+   (not value)
+   ""
+   :else
+   (xml-attribute name value)))
 
-(defn- render-attr-map [attrs]
+(defn render-attr-map [attrs]
   (apply str
-    (sort (map render-attribute attrs))))
+         (sort (map render-attribute attrs))))
 
 (def ^{:doc "Regular expression that parses a CSS-style id and class from an element name."
        :private true}
@@ -55,7 +55,6 @@
 
 (defmulti render-html
   "Turn a Clojure data type into a string of HTML."
-  {:private true}
   type)
 
 (defn- render-element
@@ -90,7 +89,7 @@
   attributes."
   [attrs]
   (if (some unevaluated? (mapcat identity attrs))
-    `(#'render-attr-map ~attrs)
+    `(hiccup.compiler/render-attr-map ~attrs)
     (render-attr-map attrs)))
 
 (defn- form-name
@@ -116,7 +115,7 @@
 
 (defmethod compile-form :default
   [expr]
-  `(#'render-html ~expr))
+  `(hiccup.compiler/render-html ~expr))
 
 (defn- not-hint?
   "True if x is not hinted to be the supplied type."
@@ -148,16 +147,16 @@
   "Returns the compilation strategy to use for a given element."
   [[tag attrs & content :as element]]
   (cond
-    (every? literal? element)
-      ::all-literal                    ; e.g. [:span "foo"]
-    (and (literal? tag) (map? attrs))
-      ::literal-tag-and-attributes     ; e.g. [:span {} x]
-    (and (literal? tag) (not-implicit-map? attrs))
-      ::literal-tag-and-no-attributes  ; e.g. [:span ^String x]
-    (literal? tag)
-      ::literal-tag                    ; e.g. [:span x]
-    :else
-      ::default))                      ; e.g. [x]
+   (every? literal? element)
+   ::all-literal                    ; e.g. [:span "foo"]
+   (and (literal? tag) (map? attrs))
+   ::literal-tag-and-attributes     ; e.g. [:span {} x]
+   (and (literal? tag) (not-implicit-map? attrs))
+   ::literal-tag-and-no-attributes  ; e.g. [:span ^String x]
+   (literal? tag)
+   ::literal-tag                    ; e.g. [:span x]
+   :else
+   ::default))                      ; e.g. [x]
 
 (declare compile-seq)
 
@@ -192,11 +191,11 @@
        (if (map? ~attrs-sym)
          ~(if (or content (container-tags tag))
             `(str ~(str "<" tag)
-                  (#'render-attr-map (merge ~tag-attrs ~attrs-sym)) ">"
+                  (hiccup.compiler/render-attr-map (merge ~tag-attrs ~attrs-sym)) ">"
                   ~@(compile-seq content)
                   ~(str "</" tag ">"))
             `(str ~(str "<" tag)
-                  (#'render-attr-map (merge ~tag-attrs ~attrs-sym))
+                  (hiccup.compiler/render-attr-map (merge ~tag-attrs ~attrs-sym))
                   ~(end-tag)))
          ~(if (or attrs (container-tags tag))
             `(str ~(str "<" tag (render-attr-map tag-attrs) ">")
@@ -206,12 +205,12 @@
 
 (defmethod compile-element :default
   [element]
-  `(#'render-element
-     [~(first element)
-      ~@(for [x (rest element)]
-          (if (vector? x)
-            (compile-element x)
-            x))]))
+  `(hiccup.compiler/render-element
+    [~(first element)
+     ~@(for [x (rest element)]
+         (if (vector? x)
+           (compile-element x)
+           x))]))
 
 (defn- compile-seq
   "Compile a sequence of data-structures into HTML."
@@ -223,7 +222,7 @@
             (hint? expr String) expr
             (hint? expr Number) expr
             (seq? expr) (compile-form expr)
-            :else `(#'render-html ~expr)))))
+            :else `(hiccup.compiler/render-html ~expr)))))
 
 (defn- collapse-strs
   "Collapse nested str expressions into one, where possible."
