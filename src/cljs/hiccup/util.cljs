@@ -61,6 +61,10 @@
   (url-encode [x] "Turn a value into a URL-encoded string."))
 
 (extend-protocol URLEncode
+  nil
+  (url-encode [n] "")
+  number
+  (url-encode [n] (str n))
   string
   (url-encode [s]
     (-> (js/escape (name s))
@@ -73,15 +77,15 @@
   object
   (url-encode [x] (url-encode (to-str x))))
 
-;; (defn url
-;;   "Creates a URL string from a variable list of arguments and an optional
-;;   parameter map as the last argument. For example:
-;;     (url \"/group/\" 4 \"/products\" {:page 9})
-;;     => \"/group/4/products?page=9\""
-;;   [& args]
-;;   (let [params (last args), args (butlast args)]
-;;     (to-uri
-;;      (str (apply str args)
-;;           (if (map? params)
-;;             (str "?" (url-encode params))
-;;             params)))))
+(defn url
+  "Creates a URL string from a variable list of arguments and an optional
+  parameter map as the last argument. For example:
+    (url \"/group/\" 4 \"/products\" {:page 9})
+    => \"/group/4/products?page=9\""
+  [& args]
+  (let [params (last args), args (butlast args)]
+    (to-uri
+     (str (apply str args)
+          (if (map? params)
+            (str "?" (url-encode params))
+            params)))))

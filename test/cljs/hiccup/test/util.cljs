@@ -1,11 +1,7 @@
 (ns hiccup.test.util
   (:require [goog.Uri :as Uri])
-  (:use [hiccup.util :only (as-str escape-html url-encode to-str to-uri *base-url*)])
-  (:use-macros [hiccup.macro :only (with-base-url)])
-  ;; (:use clojure.test
-  ;;       hiccup.util)
-  ;; (:import java.net.URI)
-  )
+  (:use [hiccup.util :only (as-str escape-html url url-encode to-str to-uri *base-url*)])
+  (:use-macros [hiccup.macro :only (with-base-url)]))
 
 (defn test-escaped-chars []
   (assert (= (escape-html "\"") "&quot;"))
@@ -32,6 +28,8 @@
     (assert (= (to-str (to-uri "../bar")) "../bar"))))
 
 (defn test-url-encode []
+  (assert (= "" (url-encode nil)))
+  (assert (= "1" (url-encode 1)))
   ;; strings
   (assert (= "a" (url-encode "a")))
   (assert (= "a+b" (url-encode "a b")))
@@ -45,21 +43,17 @@
   ;; different encodings
   (assert (= "iroha=%u3044%u308D%u306F" (url-encode {:iroha "いろは"}))))
 
-;; (defn test-url []
-;;   (testing "URL parts and parameters"
-;;     ;; (are [u s] (= u s)
-;;     ;;   (url "foo")          (URI. "foo")
-;;     ;;   (url "foo/" 1)       (URI. "foo/1")
-;;     ;;   (url "/foo/" "bar")  (URI. "/foo/bar")
-;;     ;;   (url {:a "b"})       (URI. "?a=b")
-;;     ;;   (url "foo" {:a "&"}) (URI. "foo?a=%26")
-;;     ;;   (url "/foo/" 1 "/bar" {:page 2}) (URI. "/foo/1/bar?page=2"))
-;;     ))
+(defn test-url []
+  (assert (= (to-str (goog.Uri. "foo")) (to-str (url "foo"))))
+  (assert (= (to-str (goog.Uri. "foo/1")) (to-str (url "foo/" 1))))
+  (assert (= (to-str (goog.Uri. "/foo/bar")) (to-str (url "/foo/" "bar"))))
+  (assert (= (to-str (goog.Uri. "?a=b")) (to-str (url {:a "b"}))))
+  (assert (= (to-str (goog.Uri. "foo?a=%26")) (to-str (url "foo" {:a "&"}))))
+  (assert (= (to-str (goog.Uri. "/foo/1/bar?page=2")) (to-str (url "/foo/" 1 "/bar" {:page 2})))))
 
 (defn test []
   (test-as-str)
   (test-escaped-chars)
   (test-url-encode)
   (test-to-uri)
-  ;; (test-url)
-  )
+  (test-url))
