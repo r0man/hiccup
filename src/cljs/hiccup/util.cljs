@@ -1,12 +1,13 @@
 (ns hiccup.util
   ;; "Utility functions for Hiccup."
   (:require [clojure.string :as str]
-            [goog.string :as string])
+            [goog.string :as string]
+            [goog.Uri :as Uri])
   ;; (:import java.net.URI
   ;;          java.net.URLEncoder)
   )
 
-;; (def ^:dynamic *base-url* nil)
+(def ^:dynamic *base-url* nil)
 
 ;; (defmacro with-base-url
 ;;   "Sets a base URL that will be prepended onto relative URIs. Note that for this
@@ -19,14 +20,12 @@
   (^String to-str [x] "Convert a value into a string."))
 
 (extend-protocol ToString
-  ;; clojure.lang.Keyword
-  ;; (to-str [k] (name k))
-  ;; java.net.URI
-  ;; (to-str [u]
-  ;;   (if (or (.isAbsolute u)
-  ;;           (not (-> (.getPath u) (.startsWith "/"))))
-  ;;     (str u)
-  ;;     (str *base-url* u)))
+  goog.Uri
+  (to-str [u]
+    (if (or (. u (hasDomain))
+            (not (re-matches #"^/.*" (. u (getPath)))))
+      (str u)
+      (str *base-url* u)))
   nil
   (to-str [_] "")
   number
@@ -37,28 +36,30 @@
   (to-str [x]
     (str x)))
 
+;; (to-str (goog.Uri. "http://example.com"))
+
 (defn ^String as-str
   "Converts its arguments into a string using to-str."
   [& xs]
   (apply str (map to-str xs)))
 
-;; (defprotocol ToURI
-;;   (^URI to-uri [x] "Convert a value into a URI."))
+(defprotocol ToURI
+  (^goog.Uri to-uri [x] "Convert a value into a URI."))
 
-;; (extend-protocol ToURI
-;;   java.net.URI
-;;   (to-uri [u] u)
-;;   String
-;;   (to-uri [s] (URI. s)))
+(extend-protocol ToURI
+  goog.Uri
+  (to-uri [u] u)
+  string
+  (to-uri [s] (goog.Uri. s)))
 
 (defn escape-html
   "Change special characters into HTML character entities."
   [text]
   (.. ^String (as-str text)
-    (replace "&"  "&amp;")
-    (replace "<"  "&lt;")
-    (replace ">"  "&gt;")
-    (replace "\"" "&quot;")))
+      (replace "&"  "&amp;")
+      (replace "<"  "&lt;")
+      (replace ">"  "&gt;")
+      (replace "\"" "&quot;")))
 
 ;; (def ^:dynamic *encoding* "UTF-8")
 
@@ -79,13 +80,10 @@
   cljs.core.ObjMap
   (url-encode [m]
     (str/join "&"
-      (for [[k v] m]
-        (str (url-encode k) "=" (url-encode v)))))
+              (for [[k v] m]
+                (str (url-encode k) "=" (url-encode v)))))
   object
   (url-encode [x] (url-encode (to-str x))))
-
-;; (url-encode {:a "b"})
-;; (url-encode {"a" "b"})
 
 ;; (defn url
 ;;   "Creates a URL string from a variable list of arguments and an optional
