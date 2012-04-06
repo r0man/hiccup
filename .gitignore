@@ -7,3 +7,4 @@ autodoc
 .lein-deps-sum
 doc
 .lein-cljsbuild-compiler-*
+.lein-cljsbuild-repl
