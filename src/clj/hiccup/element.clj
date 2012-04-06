@@ -1,7 +1,7 @@
 (ns hiccup.element
   "Functions for creating HTML elements."
-  (:use hiccup.def
-        hiccup.util))
+  (:use [hiccup.def :only (defelem)]
+        [hiccup.util :only (to-uri)]))
 
 (defn javascript-tag
   "Wrap the supplied javascript up in script tags and a CDATA section."
@@ -35,4 +35,3 @@
   "Create an image element."
   ([src]     [:img {:src (to-uri src)}])
   ([src alt] [:img {:src (to-uri src), :alt alt}]))
-

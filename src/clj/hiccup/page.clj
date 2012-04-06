@@ -1,7 +1,7 @@
 (ns hiccup.page
   "Functions for setting up HTML pages."
-  (:use hiccup.core 
-        hiccup.util))
+  (:use [hiccup.core :only (html)]
+        [hiccup.util :only (to-uri)]))
 
 (def doctype
   {:html4
