@@ -1,16 +1,16 @@
 (ns hiccup.test.util
-  (:use [hiccup.util :only (as-str)])
+  (:use [hiccup.util :only (as-str escape-html)])
   ;; (:use clojure.test
   ;;       hiccup.util)
   ;; (:import java.net.URI)
   )
 
-;; (deftest test-escaped-chars
-;;   (is (= (escape-html "\"") "&quot;"))
-;;   (is (= (escape-html "<") "&lt;"))
-;;   (is (= (escape-html ">") "&gt;"))
-;;   (is (= (escape-html "&") "&amp;"))
-;;   (is (= (escape-html "foo") "foo")))
+(defn test-escaped-chars []
+  (assert (= (escape-html "\"") "&quot;"))
+  (assert (= (escape-html "<") "&lt;"))
+  (assert (= (escape-html ">") "&gt;"))
+  (assert (= (escape-html "&") "&amp;"))
+  (assert (= (escape-html "foo") "foo")))
 
 (defn test-as-str []
   (assert (= (as-str "foo") "foo"))
@@ -61,3 +61,7 @@
 ;;       (url {:a "b"})       (URI. "?a=b")
 ;;       (url "foo" {:a "&"}) (URI. "foo?a=%26")
 ;;       (url "/foo/" 1 "/bar" {:page 2}) (URI. "/foo/1/bar?page=2"))))
+
+(defn test []
+  (test-as-str)
+  (test-escaped-chars))

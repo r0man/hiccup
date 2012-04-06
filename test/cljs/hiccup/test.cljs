@@ -2,4 +2,4 @@
   (:require [hiccup.test.util :as util]))
 
 (defn run []
-  (util/test-as-str))
+  (util/test))

@@ -31,9 +31,7 @@
   number
   (to-str [x] (str x))
   string
-  (to-str [x]
-    (.log js/console "STRING")
-    (name x))
+  (to-str [x] (name x))
   object
   (to-str [x]
     (str x)))
@@ -52,14 +50,14 @@
 ;;   String
 ;;   (to-uri [s] (URI. s)))
 
-;; (defn escape-html
-;;   "Change special characters into HTML character entities."
-;;   [text]
-;;   (.. ^String (as-str text)
-;;     (replace "&"  "&amp;")
-;;     (replace "<"  "&lt;")
-;;     (replace ">"  "&gt;")
-;;     (replace "\"" "&quot;")))
+(defn escape-html
+  "Change special characters into HTML character entities."
+  [text]
+  (.. ^String (as-str text)
+    (replace "&"  "&amp;")
+    (replace "<"  "&lt;")
+    (replace ">"  "&gt;")
+    (replace "\"" "&quot;")))
 
 ;; (def ^:dynamic *encoding* "UTF-8")
 
