@@ -21,7 +21,6 @@
      :source-path "src/cljs"}
     :test
     {:compiler {:output-to "target/hiccup-test.js"
-                :optimizations :whitespace
                 :pretty-print true}
      :source-path "test/cljs"}}
    :crossovers []

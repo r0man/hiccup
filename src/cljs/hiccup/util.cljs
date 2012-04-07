@@ -1,8 +1,12 @@
 (ns hiccup.util
-  ;; "Utility functions for Hiccup."
   (:require [clojure.string :as str]
             [goog.string :as string]
             [goog.Uri :as Uri]))
+
+(extend-type goog.Uri
+  IEquiv
+  (-equiv [uri other]
+    (-equiv (str uri) (str other))))
 
 (def ^:dynamic *base-url* nil)
 
