@@ -24,8 +24,6 @@
     {:compiler {:output-to "target/hiccup-test.js"
                 :pretty-print true}
      :source-path "test/cljs"}}
-   :crossovers []
-   :crossover-jar true
    :repl-listen-port 9000
    :repl-launch-commands
    {"chromium" ["chromium" "test-resources/repl.html"]
