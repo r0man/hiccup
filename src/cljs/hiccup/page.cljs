@@ -15,7 +15,7 @@
    :html5
    "<!DOCTYPE html>\n"})
 
-(defn xhtml-tag
+(defn ^:export xhtml-tag
   "Create an XHTML element for the specified language."
   [lang & contents]
   [:html {:xmlns "http://www.w3.org/1999/xhtml"
@@ -23,18 +23,18 @@
           :lang lang}
     contents])
 
-(defn xml-declaration
+(defn ^:export xml-declaration
   "Create a standard XML declaration for the following encoding."
   [encoding]
   (str "<?xml version=\"1.0\" encoding=\"" encoding "\"?>\n"))
 
-(defn include-js
+(defn ^:export include-js
   "Include a list of external javascript files."
   [& scripts]
   (for [script scripts]
     [:script {:type "text/javascript", :src (to-uri script)}]))
 
-(defn include-css
+(defn ^:export include-css
   "Include a list of external stylesheet files."
   [& styles]
   (for [style styles]

@@ -3,7 +3,7 @@
         [hiccup.util :only (to-uri)])
   (:use-macros [hiccup.macro :only (defelem)]))
 
-(defn javascript-tag
+(defn ^:export javascript-tag
   "Wrap the supplied javascript up in script tags and a CDATA section."
   [script]
   [:script {:type "text/javascript"}
