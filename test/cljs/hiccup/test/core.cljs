@@ -1,4 +1,5 @@
 (ns hiccup.test.core
+  (:use [hiccup.compiler :only (render-html)])
   (:use-macros [hiccup.core :only (html)]))
 
 (defn tag-names []

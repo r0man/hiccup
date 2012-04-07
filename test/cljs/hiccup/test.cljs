@@ -5,9 +5,10 @@
             [hiccup.test.page :as page]
             [hiccup.test.util :as util]))
 
-(defn run []
+(defn ^:export run []
   (core/test)
   (element/test)
   (form/test)
   (page/test)
-  (util/test))
+  (util/test)
+  "ok")

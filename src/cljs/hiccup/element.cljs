@@ -1,5 +1,6 @@
 (ns hiccup.element
-  (:use [hiccup.util :only (to-uri)])
+  (:use [hiccup.def :only (wrap-attrs)]
+        [hiccup.util :only (to-uri)])
   (:use-macros [hiccup.macro :only (defelem)]))
 
 (defn javascript-tag

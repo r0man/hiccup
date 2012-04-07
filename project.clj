@@ -11,7 +11,8 @@
   :cljsbuild
   {:builds
    {:development
-    {:compiler {:output-to "target/hiccup-debug.js"}
+    {:compiler {:output-to "target/hiccup-debug.js"
+                :pretty-print true}
      :source-path "src/cljs"}
     :production
     {:compiler {:output-to "target/hiccup.js"
@@ -28,7 +29,6 @@
    :repl-listen-port 9000
    :repl-launch-commands
    {"chromium" ["chromium" "test-resources/repl.html"]
-    "firefox" ["firefox" "test-resources/repl.html"]
-    "phantom" ["phantomjs" "test-resources/repl.js" "test-resources/repl.html"]}
-   :test-commands {"unit" ["phantomjs" "test-resources/test.js" "test-resources/test.html"]}}
+    "firefox" ["firefox" "test-resources/repl.html"]}
+   :test-commands {"unit" ["./test.sh"]}}
   :extra-classpath-dirs ["src/clj"])
