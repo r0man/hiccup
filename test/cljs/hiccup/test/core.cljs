@@ -107,7 +107,7 @@
              "<input checked=\"checked\" type=\"checkbox\" />"))
   (assert (= (html {:mode :sgml} [:input {:type "checkbox" :checked true}])
              "<input checked type=\"checkbox\">"))
-  laziness and binding scope
+  ;; laziness and binding scope
   (assert (= (html {:mode :sgml} [:html [:link] (list [:link])])
              "<html><link><link></html>")))
 

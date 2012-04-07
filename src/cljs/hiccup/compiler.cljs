@@ -51,6 +51,10 @@
       [tag (merge tag-attrs map-attrs) (next content)]
       [tag tag-attrs content])))
 
+(defmulti render-html
+  "Turn a Clojure data type into a string of HTML."
+  type)
+
 (defn- render-element
   "Render an element vector as a HTML element."
   [element]
@@ -60,10 +64,6 @@
            (render-html content)
            "</" tag ">")
       (str "<" tag (render-attr-map attrs) (end-tag)))))
-
-(defmulti render-html
-  "Turn a Clojure data type into a string of HTML."
-  type)
 
 (defmethod render-html Cons [cons]
   (apply str (map render-html cons)))
