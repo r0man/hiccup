@@ -22,7 +22,8 @@
      :source-path "src/cljs"}
     :test
     {:compiler {:output-to "target/hiccup-test.js"
-                :pretty-print true}
+                :optimizations :advanced
+                :pretty-print false}
      :source-path "test/cljs"}}
    :repl-listen-port 9000
    :repl-launch-commands
