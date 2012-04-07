@@ -1,7 +1,7 @@
 (ns hiccup.test.util
   (:require [goog.Uri :as Uri])
   (:use [hiccup.util :only (as-str escape-html url url-encode to-str to-uri *base-url*)])
-  (:use-macros [hiccup.macro :only (with-base-url)]))
+  (:use-macros [hiccup.util :only (with-base-url)]))
 
 (defn test-escaped-chars []
   (assert (= (escape-html "\"") "&quot;"))

@@ -1,12 +1,5 @@
 (ns hiccup.macro)
 
-(defmacro with-base-url
-  "Sets a base URL that will be prepended onto relative URIs. Note that for this
-  to work correctly, it needs to be placed outside the html macro."
-  [base-url & body]
-  `(binding [hiccup.util/*base-url* ~base-url]
-     ~@body))
-
 (defmacro defelem
   "Defines a function that will return a element vector. If the first argument
   passed to the resulting function is a map, it merges it with the attribute
