@@ -30,5 +30,5 @@
    :repl-launch-commands
    {"chromium" ["chromium" "test-resources/repl.html"]
     "firefox" ["firefox" "test-resources/repl.html"]}
-   :test-commands {"unit" ["./test.sh"]}}
+   :test-commands {"unit" ["./test-cljs.sh"]}}
   :extra-classpath-dirs ["src/clj"])
