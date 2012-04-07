@@ -1,16 +1,9 @@
 (ns hiccup.form
-  "Functions for generating HTML forms and input fields."
-  (:use [hiccup.def :only (defelem)]
-        [hiccup.util :only (as-str escape-html to-uri)]))
+  (:use [clojure.string :only (upper-case)]
+        [hiccup.util :only (as-str escape-html to-uri)])
+  (:use-macros [hiccup.macro :only (defelem)]))>
 
 (def ^:dynamic *group* [])
-
-(defmacro with-group
-  "Group together a set of related form fields for use with the Ring
-  nested-params middleware."
-  [group & body]
-  `(binding [hiccup.form/*group* (conj hiccup.form/*group* (as-str ~group))]
-     (list ~@body)))
 
 (defn- make-name
   "Create a field name from the supplied argument the current field group."
@@ -57,45 +50,45 @@
   ([name] (check-box name nil))
   ([name checked?] (check-box name checked? "true"))
   ([name checked? value]
-    [:input {:type "checkbox"
-             :name (make-name name)
-             :id   (make-id name)
-             :value value
-             :checked checked?}]))
+     [:input {:type "checkbox"
+              :name (make-name name)
+              :id   (make-id name)
+              :value value
+              :checked checked?}]))
 
 (defelem radio-button
   "Creates a radio button."
   ([group] (radio-button group nil))
   ([group checked?] (radio-button group checked? "true"))
   ([group checked? value]
-    [:input {:type "radio"
-             :name (make-name group)
-             :id   (make-id (str (as-str group) "-" (as-str value)))
-             :value value
-             :checked checked?}]))
+     [:input {:type "radio"
+              :name (make-name group)
+              :id   (make-id (str (as-str group) "-" (as-str value)))
+              :value value
+              :checked checked?}]))
 
 (defelem select-options
   "Creates a seq of option tags from a collection."
   ([coll] (select-options coll nil))
   ([coll selected]
-    (for [x coll]
-      (if (sequential? x)
-        (let [[text val] x]
-          [:option {:value val :selected (= val selected)} text])
-        [:option {:selected (= x selected)} x]))))
+     (for [x coll]
+       (if (sequential? x)
+         (let [[text val] x]
+           [:option {:value val :selected (= val selected)} text])
+         [:option {:selected (= x selected)} x]))))
 
 (defelem drop-down
   "Creates a drop-down box using the <select> tag."
   ([name options] (drop-down name options nil))
   ([name options selected]
-    [:select {:name (make-name name), :id (make-id name)}
+     [:select {:name (make-name name), :id (make-id name)}
       (select-options options selected)]))
 
 (defelem text-area
   "Creates a text area element."
   ([name] (text-area name nil))
   ([name value]
-    [:textarea {:name (make-name name), :id (make-id name)}
+     [:textarea {:name (make-name name), :id (make-id name)}
       (escape-html value)]))
 
 (defelem file-upload
@@ -123,11 +116,11 @@
   e.g. (form-to [:put \"/post\"]
          ...)"
   [[method action] & body]
-  (let [method-str (.toUpperCase (name method))
+  (let [method-str (upper-case (name method))
         action-uri (to-uri action)]
     (-> (if (contains? #{:get :post} method)
           [:form {:method method-str, :action action-uri}]
           [:form {:method "POST", :action action-uri}
-            (hidden-field "_method" method-str)])
+           (hidden-field "_method" method-str)])
         (concat body)
         (vec))))
