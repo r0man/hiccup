@@ -65,20 +65,26 @@
            "</" tag ">")
       (str "<" tag (render-attr-map attrs) (end-tag)))))
 
+(defn- render-seq [s]
+  (apply str (map render-html s)))
+
 (defmethod render-html Cons [cons]
-  (apply str (map render-html cons)))
+  (render-seq cons))
+
+(defmethod render-html ChunkedSeq [chunked-seq]
+  (render-seq chunked-seq))
 
 (defmethod render-html LazySeq [lazy-seq]
-  (apply str (map render-html lazy-seq)))
+  (render-seq lazy-seq))
 
 (defmethod render-html List [list]
-  (apply str (map render-html list)))
+  (render-seq list))
 
 (defmethod render-html IndexedSeq [indexed-seq]
-  (apply str (map render-html indexed-seq)))
+  (render-seq indexed-seq))
 
-(defmethod render-html PersistentVector [vector]
-  (render-element vector))
+(defmethod render-html PersistentVector [persistent-vector]
+  (render-element persistent-vector))
 
 (defmethod render-html Vector [vector]
   (render-element vector))
