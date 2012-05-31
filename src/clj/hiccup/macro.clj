@@ -1,5 +1,4 @@
-(ns hiccup.macro
-  (:use [hiccup.def :only (wrap-attrs)]))
+(ns hiccup.macro)
 
 (defmacro defelem
   "Defines a function that will return a element vector. If the first argument
@@ -9,5 +8,5 @@
   (let [ns-name (-> &env :ns :name)
         fn-name (symbol (str ns-name "/" name))]
     `(do (defn ~name ~@fdecl)
-         ;; (alter-meta! (fn-name ~name) update-in [:arglists] #'update-arglists)
-         (set! ~fn-name (hiccup.def/wrap-attrs ~fn-name)))))
+         ;; (alter-meta! ~fn-name update-in [:arglists] hiccup.def/update-arglists)
+         (set! ~name (hiccup.def/wrap-attrs ~name)))))

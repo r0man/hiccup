@@ -1,11 +1,12 @@
 (defproject hiccup "1.0.0-RC1"
   :description "A fast library for rendering HTML in Clojure"
   :url "http://github.com/weavejester/hiccup"
-  :dependencies [[org.clojure/clojure "1.3.0"]]
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [org.clojure/clojurescript "0.0-1345"]]
   :source-paths ["src/clj"]
   :test-paths ["test/clj"]
   :plugins [[codox "0.6.0"]
-            [lein-cljsbuild "0.1.6"]]
+            [lein-cljsbuild "0.2.1"]]
   :hooks [leiningen.cljsbuild]
   :codox {:exclude [hiccup.compiler]}
   :cljsbuild
@@ -27,7 +28,7 @@
      :source-path "test/cljs"}}
    :repl-listen-port 9000
    :repl-launch-commands
-   {"chromium" ["chromium" "test-resources/repl.html"]
-    "firefox" ["firefox" "test-resources/repl.html"]}
+   {"chromium" ["chromium" "http://localhost:9000/index.html"]
+    "firefox" ["firefox" "http://localhost:9000/index.html"]}
    :test-commands {"unit" ["./test-cljs.sh"]}}
   :extra-classpath-dirs ["src/clj"])
