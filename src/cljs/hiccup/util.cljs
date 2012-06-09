@@ -11,7 +11,7 @@
 (def ^:dynamic *base-url* nil)
 
 (defprotocol ToString
-  (^String to-str [x] "Convert a value into a string."))
+  (to-str [x] "Convert a value into a string."))
 
 (extend-protocol ToString
   goog.Uri
@@ -30,7 +30,7 @@
   (to-str [x]
     (str x)))
 
-(defn ^String as-str
+(defn as-str
   "Converts its arguments into a string using to-str."
   [& xs]
   (apply str (map to-str xs)))
@@ -47,7 +47,7 @@
 (defn escape-html
   "Change special characters into HTML character entities."
   [text]
-  (.. ^String (as-str text)
+  (.. (as-str text)
       (replace "&"  "&amp;")
       (replace "<"  "&lt;")
       (replace ">"  "&gt;")
