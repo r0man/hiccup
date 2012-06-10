@@ -1,4 +1,4 @@
-(defproject hiccup "1.0.0-RC1"
+(defproject hiccup "1.0.0"
   :description "A fast library for rendering HTML in Clojure"
   :url "http://github.com/weavejester/hiccup"
   :dependencies [[org.clojure/clojure "1.4.0"]
@@ -23,7 +23,7 @@
      :source-path "src/cljs"}
     :test
     {:compiler {:output-to "target/hiccup-test.js"
-                :optimizations :advanced
+                :optimizations :simple
                 :pretty-print false}
      :source-path "test/cljs"}}
    :repl-listen-port 9000

@@ -34,5 +34,5 @@
   map of the returned element value."
   [name & fdecl]
   `(do (defn ^:export ~name ~@fdecl)
-       (alter-meta! (var ~name) update-in [:arglists] #'update-arglists)
-       (alter-var-root (var ~name) wrap-attrs)))
+       ;; (alter-meta! (var ~name) update-in [:arglists] #'update-arglists)
+       (alter-var-root (var ~name) hiccup.def/wrap-attrs)))
