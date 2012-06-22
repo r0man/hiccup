@@ -1,6 +1,6 @@
 (ns hiccup.compiler
   "Internal functions for compilation."
-  (:use [hiccup.util :only (as-str escape-html)])
+  (:use [hiccup.util :only [as-str escape-html]])
   (:import [clojure.lang IPersistentVector ISeq]))
 
 (def ^:dynamic *html-mode* :xml)

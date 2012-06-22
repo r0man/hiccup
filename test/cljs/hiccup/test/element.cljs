@@ -1,6 +1,6 @@
 (ns hiccup.test.element
   (:require [goog.Uri :as Uri])
-  (:use [hiccup.element :only (javascript-tag link-to mail-to unordered-list ordered-list)]))
+  (:use [hiccup.element :only [javascript-tag link-to mail-to unordered-list ordered-list]]))
 
 (defn javascript-tag-test []
   (assert (= (javascript-tag "alert('hello');")

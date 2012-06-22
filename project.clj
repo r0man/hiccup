@@ -2,7 +2,7 @@
   :description "A fast library for rendering HTML in Clojure"
   :url "http://github.com/weavejester/hiccup"
   :dependencies [[org.clojure/clojure "1.4.0"]
-                 [org.clojure/clojurescript "0.0-1412"]]
+                 [org.clojure/clojurescript "0.0-1424"]]
   :source-paths ["src/clj"]
   :test-paths ["test/clj"]
   :plugins [[codox "0.6.0"]
@@ -23,8 +23,9 @@
      :source-path "src/cljs"}
     :test
     {:compiler {:output-to "target/hiccup-test.js"
-                :optimizations :simple
-                :pretty-print false}
+                :optimizations :whitespace
+                ;; :optimizations :advanced
+                :pretty-print true}
      :source-path "test/cljs"}}
    :repl-listen-port 9000
    :repl-launch-commands

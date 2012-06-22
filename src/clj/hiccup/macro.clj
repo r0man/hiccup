@@ -9,4 +9,4 @@
         fn-name (symbol (str ns-name "/" name))]
     `(do (defn ~name ~@fdecl)
          ;; (alter-meta! ~fn-name update-in [:arglists] hiccup.def/update-arglists)
-         (set! ~name (hiccup.def/wrap-attrs ~name)))))
+         (set! ~fn-name (hiccup.def/wrap-attrs ~fn-name)))))

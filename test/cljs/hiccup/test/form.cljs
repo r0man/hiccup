@@ -1,9 +1,9 @@
 (ns hiccup.test.form
-  (:use [hiccup.form :only (hidden-field text-field check-box password-field email-field)]
-        [hiccup.form :only (radio-button select-options drop-down text-area file-upload)]
-        [hiccup.form :only (label submit-button reset-button form-to)])
-  (:use-macros [hiccup.core :only (html)]
-               [hiccup.form :only (with-group)]))
+  (:use [hiccup.form :only [hidden-field text-field check-box password-field email-field]]
+        [hiccup.form :only [radio-button select-options drop-down text-area file-upload]]
+        [hiccup.form :only [label submit-button reset-button form-to]])
+  (:use-macros [hiccup.core :only [html]]
+               [hiccup.form :only [with-group]]))
 
 (defn test-hidden-field []
   (assert (= (html (hidden-field :foo "bar"))

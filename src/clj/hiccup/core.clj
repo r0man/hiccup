@@ -1,8 +1,8 @@
 (ns hiccup.core
   "Library for rendering a tree of vectors into a string of HTML.
   Pre-compiles where possible for performance."
-  (:use [hiccup.compiler :only (compile-html *html-mode*)]
-        [hiccup.util :only (escape-html)]))
+  (:use [hiccup.compiler :only [compile-html *html-mode*]]
+        [hiccup.util :only [escape-html]]))
 
 (defmacro html
   "Render Clojure data structures to a string of HTML."

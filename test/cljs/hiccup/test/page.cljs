@@ -1,7 +1,7 @@
 (ns hiccup.test.page
   (:require [goog.Uri :as Uri])
-  (:use [hiccup.page :only (include-js include-css)])
-  (:use-macros [hiccup.page :only (html4 html5 xhtml)]))
+  (:use [hiccup.page :only [include-js include-css]])
+  (:use-macros [hiccup.page :only [html4 html5 xhtml]]))
 
 (defn html4-test []
   (assert (= (html4 [:body [:p "Hello" [:br] "World"]])

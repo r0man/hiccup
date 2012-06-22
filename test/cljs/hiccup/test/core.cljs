@@ -1,5 +1,5 @@
 (ns hiccup.test.core
-  (:use-macros [hiccup.core :only (html)]))
+  (:use-macros [hiccup.core :only [html]]))
 
 (defn tag-names []
   ;; basic tags

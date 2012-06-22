@@ -1,6 +1,6 @@
 (ns hiccup.page
-  (:use [hiccup.util :only (to-uri)])
-  (:use-macros [hiccup.core :only (html)]))
+  (:use [hiccup.util :only [to-uri]])
+  (:use-macros [hiccup.core :only [html]]))
 
 (def doctype
   {:html4

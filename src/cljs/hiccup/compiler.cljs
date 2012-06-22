@@ -1,5 +1,5 @@
 (ns hiccup.compiler
-  (:use [hiccup.util :only (as-str escape-html)]))
+  (:use [hiccup.util :only [as-str escape-html]]))
 
 (def ^:dynamic *html-mode* :xml)
 

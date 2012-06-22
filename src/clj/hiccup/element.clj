@@ -1,7 +1,7 @@
 (ns hiccup.element
   "Functions for creating HTML elements."
-  (:use [hiccup.def :only (defelem)]
-        [hiccup.util :only (to-uri)]))
+  (:use [hiccup.def :only [defelem]]
+        [hiccup.util :only [to-uri]]))
 
 (defn javascript-tag
   "Wrap the supplied javascript up in script tags and a CDATA section."

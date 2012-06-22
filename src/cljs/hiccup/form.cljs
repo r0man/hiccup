@@ -1,8 +1,8 @@
 (ns hiccup.form
-  (:use [clojure.string :only (upper-case)]
-        [hiccup.def :only (wrap-attrs)]
-        [hiccup.util :only (as-str escape-html to-uri)])
-  (:use-macros [hiccup.macro :only (defelem)]))
+  (:use [clojure.string :only [upper-case]]
+        [hiccup.def :only [wrap-attrs]]
+        [hiccup.util :only [as-str escape-html to-uri]])
+  (:use-macros [hiccup.macro :only [defelem]]))
 
 (def ^:dynamic *group* [])
 
