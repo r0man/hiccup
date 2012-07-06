@@ -1,6 +1,7 @@
 (ns hiccup.def
   "Macros for defining functions that generate HTML"
-  (:use [hiccup.core :only [html]]))
+  (:use [hiccup.core :only [html]]
+        [clojure.walk :only [postwalk-replace]]))
 
 (defmacro defhtml
   "Define a function, but wrap its output in an implicit html macro."
@@ -33,6 +34,7 @@
   passed to the resulting function is a map, it merges it with the attribute
   map of the returned element value."
   [name & fdecl]
-  `(do (defn ^:export ~name ~@fdecl)
-       ;; (alter-meta! (var ~name) update-in [:arglists] #'update-arglists)
-       (alter-var-root (var ~name) hiccup.def/wrap-attrs)))
+  (let [fn-name# (gensym (str name))
+        fdecl (postwalk-replace {name fn-name#} fdecl)]
+    `(do (defn ~fn-name# ~@fdecl)
+         (def ~name (hiccup.def/wrap-attrs ~fn-name#)))))

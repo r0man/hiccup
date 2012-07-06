@@ -1,7 +1,6 @@
 (ns hiccup.test.def
   (:use [hiccup.compiler :only [render-html render-attr-map]])
-  (:use-macros [hiccup.def :only [defhtml]]
-               [hiccup.macro :only [defelem]]))
+  (:use-macros [hiccup.def :only [defelem defhtml]]))
 
 (defn test-defhtml []
   ;; basic html function

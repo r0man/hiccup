@@ -1,7 +1,7 @@
 (ns hiccup.element
   (:use [hiccup.def :only [wrap-attrs]]
         [hiccup.util :only [to-uri]])
-  (:use-macros [hiccup.macro :only [defelem]]))
+  (:use-macros [hiccup.def :only [defelem]]))
 
 (defn ^:export javascript-tag
   "Wrap the supplied javascript up in script tags and a CDATA section."

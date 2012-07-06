@@ -60,5 +60,7 @@
     (is (thrown? AssertionError (three-forms-extra)))
     (is (thrown? AssertionError (three-forms-extra 0)))
     (is (thrown? AssertionError (three-forms-extra 0 0)))
-    (is (= "my documentation" (:doc (meta #'three-forms-extra))))
-    (is (= :attr (:my (meta #'three-forms-extra))))))
+    ;; TODO: ClojureScript?
+    ;; (is (= "my documentation" (:doc (meta #'three-forms-extra))))
+    ;; (is (= :attr (:my (meta #'three-forms-extra))))
+    ))
