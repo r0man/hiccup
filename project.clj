@@ -1,12 +1,11 @@
 (defproject hiccup "1.0.0"
   :description "A fast library for rendering HTML in Clojure"
   :url "http://github.com/weavejester/hiccup"
-  :dependencies [[org.clojure/clojure "1.4.0"]
-                 [org.clojure/clojurescript "0.0-1443"]]
+  :dependencies [[org.clojure/clojure "1.4.0"]]
   :source-paths ["src/clj"]
   :test-paths ["test/clj"]
   :plugins [[codox "0.6.0"]
-            [lein-cljsbuild "0.2.2"]]
+            [lein-cljsbuild "0.2.4"]]
   :hooks [leiningen.cljsbuild]
   :codox {:exclude [hiccup.compiler]}
   :cljsbuild
