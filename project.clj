@@ -21,7 +21,6 @@
                 :pretty-print false}
      :source-path "src/cljs"}
     {:compiler {:output-to "target/hiccup-test.js"
-                ;; :optimizations :whitespace
                 :optimizations :advanced
                 :pretty-print true}
      :source-path "test/cljs"}]
