@@ -5,7 +5,7 @@
   :source-paths ["src/clj"]
   :test-paths ["test/clj"]
   :plugins [[codox "0.6.0"]
-            [lein-cljsbuild "0.2.5"]]
+            [lein-cljsbuild "0.2.9"]]
   :hooks [leiningen.cljsbuild]
   :codox {:exclude [hiccup.compiler]}
   :cljsbuild
