@@ -13,3 +13,4 @@ pom.xml
 /out
 /.repl-phantom-err
 /.repl-phantom-out
+/pom.xml.asc
