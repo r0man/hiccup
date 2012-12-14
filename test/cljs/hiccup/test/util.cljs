@@ -15,17 +15,38 @@
   (assert (= (as-str :foo) "foo"))
   (assert (= (as-str 100) "100"))
   (assert (= (as-str "a" :b 3) "ab3"))
-  (assert (= (as-str (goog.Uri. "/foo")) "/foo")))
+  (assert (= (as-str (goog.Uri. "/foo")) "/foo"))
+  (assert (= (as-str (goog.Uri. "localhost:3000/foo")) "localhost:3000/foo")))
 
 (defn test-to-uri []
+  ;; with no base URL
   (assert (= (to-str (to-uri "foo")) "foo"))
   (assert (= (to-str (to-uri "/foo/bar")) "/foo/bar"))
   (assert (= (to-str (to-uri "/foo#bar")) "/foo#bar"))
+  ;; with base URL
   (with-base-url "/foo"
     (assert (= (to-str (to-uri "/bar")) "/foo/bar"))
     (assert (= (to-str (to-uri "http://example.com")) "http://example.com"))
+    (assert (= (to-str (to-uri "https://example.com/bar")) "https://example.com/bar"))
     (assert (= (to-str (to-uri "bar")) "bar"))
-    (assert (= (to-str (to-uri "../bar")) "../bar"))))
+    (assert (= (to-str (to-uri "../bar")) "../bar"))
+    (assert (= (to-str (to-uri "//example.com/bar")) "//example.com/bar")))
+  ;; with base URL for root context
+  (with-base-url "/"
+    (assert (= (to-str (to-uri "/bar")) "/bar"))
+    (assert (= (to-str (to-uri "http://example.com")) "http://example.com"))
+    (assert (= (to-str (to-uri "https://example.com/bar")) "https://example.com/bar"))
+    (assert (= (to-str (to-uri "bar")) "bar"))
+    (assert (= (to-str (to-uri "../bar")) "../bar"))
+    (assert (= (to-str (to-uri "//example.com/bar")) "//example.com/bar")))
+  ;; with base URL containing trailing slash
+  (with-base-url "/foo/"
+    (assert (= (to-str (to-uri "/bar")) "/foo/bar"))
+    (assert (= (to-str (to-uri "http://example.com")) "http://example.com"))
+    (assert (= (to-str (to-uri "https://example.com/bar")) "https://example.com/bar"))
+    (assert (= (to-str (to-uri "bar")) "bar"))
+    (assert (= (to-str (to-uri "../bar")) "../bar"))
+    (assert (= (to-str (to-uri "//example.com/bar")) "//example.com/bar"))))
 
 (defn test-url-encode []
   (assert (= "" (url-encode nil)))

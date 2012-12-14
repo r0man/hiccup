@@ -17,9 +17,13 @@
   goog.Uri
   (to-str [u]
     (if (or (. u (hasDomain))
+            (nil? (. u (getPath)))
             (not (re-matches #"^/.*" (. u (getPath)))))
       (str u)
-      (str *base-url* u)))
+      (let [base (str *base-url*)]
+        (if (re-matches #".*/$" base)
+          (str (subs base 0 (dec (count base))) u)
+          (str base u)))))
   nil
   (to-str [_] "")
   number
@@ -75,7 +79,7 @@
   object
   (url-encode [x] (url-encode (to-str x))))
 
-(defn ^:export url
+(defn url
   "Creates a URL string from a variable list of arguments and an optional
   parameter map as the last argument. For example:
     (url \"/group/\" 4 \"/products\" {:page 9})

@@ -1,6 +1,7 @@
 (ns hiccup.test.page
   (:require [goog.Uri :as Uri])
-  (:use [hiccup.page :only [include-js include-css]])
+  (:use [hiccup.page :only [include-js include-css]]
+        [hiccup.compiler :only [*html-mode*]])
   (:use-macros [hiccup.page :only [html4 html5 xhtml]]))
 
 (defn html4-test []
@@ -35,6 +36,17 @@
              "<!DOCTYPE html>\n<html><body><p>Hello<br>World</p></body></html>"))
   (assert (= (html5 {:lang "en"} [:body "Hello World"])
              "<!DOCTYPE html>\n<html lang=\"en\"><body>Hello World</body></html>"))
+  (assert (= (html5 {:prefix "og: http://ogp.me/ns#"}
+                    [:body "Hello World"])
+             (str "<!DOCTYPE html>\n"
+                  "<html prefix=\"og: http://ogp.me/ns#\">"
+                  "<body>Hello World</body></html>")))
+  (assert (= (html5 {:prefix "og: http://ogp.me/ns#"
+                     :lang "en"}
+                    [:body "Hello World"])
+             (str "<!DOCTYPE html>\n"
+                  "<html lang=\"en\" prefix=\"og: http://ogp.me/ns#\">"
+                  "<body>Hello World</body></html>")))
   ;; XML mode
   (assert (= (html5 {:xml? true} [:body [:p "Hello" [:br] "World"]])
              (str "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -44,6 +56,18 @@
              (str "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                   "<!DOCTYPE html>\n"
                   "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">"
+                  "<body>Hello World</body></html>")))
+  (assert (= (html5 {:xml? true,
+                     "xml:og" "http://ogp.me/ns#"} [:body "Hello World"])
+             (str "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                  "<!DOCTYPE html>\n"
+                  "<html xml:og=\"http://ogp.me/ns#\" xmlns=\"http://www.w3.org/1999/xhtml\">"
+                  "<body>Hello World</body></html>")))
+  (assert (= (html5 {:xml? true, :lang "en"
+                     "xml:og" "http://ogp.me/ns#"} [:body "Hello World"])
+             (str "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                  "<!DOCTYPE html>\n"
+                  "<html lang=\"en\" xml:lang=\"en\" xml:og=\"http://ogp.me/ns#\" xmlns=\"http://www.w3.org/1999/xhtml\">"
                   "<body>Hello World</body></html>"))))
 
 (defn include-js-test []

@@ -2,7 +2,7 @@
   (:use [hiccup.util :only [escape-html]])
   (:require [goog.dom :as dom]))
 
-(def ^{:export true :doc "Alias for hiccup.util/escape-html"}
+(def ^{:doc "Alias for hiccup.util/escape-html"}
   h escape-html)
 
 (defn render

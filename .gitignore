@@ -9,6 +9,7 @@ doc
 hiccup*.jar
 lib
 pom.xml
-target
+/target
+/out
 /.repl-phantom-err
 /.repl-phantom-out

@@ -1,6 +1,8 @@
 Hiccup
 ======
 
+[![Build Status](https://secure.travis-ci.org/weavejester/hiccup.png)](http://travis-ci.org/weavejester/hiccup)
+
 Hiccup is a library for representing HTML in Clojure. It uses vectors
 to represent elements, and maps to represent an element's attributes.
 
@@ -9,7 +11,7 @@ Install
 
 Add the following dependency to your `project.clj` file:
 
-    [hiccup "1.0.0"]
+    [hiccup "1.0.2"]
 
 Documentation
 -------------

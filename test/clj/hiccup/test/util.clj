@@ -16,7 +16,8 @@
   (is (= (as-str 100) "100"))
   (is (= (as-str 4/3) (str (float 4/3))))
   (is (= (as-str "a" :b 3) "ab3"))
-  (is (= (as-str (URI. "/foo")) "/foo")))
+  (is (= (as-str (URI. "/foo")) "/foo"))
+  (is (= (as-str (URI. "localhost:3000/foo")) "localhost:3000/foo")))
 
 (deftest test-to-uri
   (testing "with no base URL"
@@ -27,8 +28,26 @@
     (with-base-url "/foo"
       (is (= (to-str (to-uri "/bar")) "/foo/bar"))
       (is (= (to-str (to-uri "http://example.com")) "http://example.com"))
+      (is (= (to-str (to-uri "https://example.com/bar")) "https://example.com/bar"))
       (is (= (to-str (to-uri "bar")) "bar"))
-      (is (= (to-str (to-uri "../bar")) "../bar")))))
+      (is (= (to-str (to-uri "../bar")) "../bar"))
+      (is (= (to-str (to-uri "//example.com/bar")) "//example.com/bar"))))
+  (testing "with base URL for root context"
+    (with-base-url "/"
+      (is (= (to-str (to-uri "/bar")) "/bar"))
+      (is (= (to-str (to-uri "http://example.com")) "http://example.com"))
+      (is (= (to-str (to-uri "https://example.com/bar")) "https://example.com/bar"))
+      (is (= (to-str (to-uri "bar")) "bar"))
+      (is (= (to-str (to-uri "../bar")) "../bar"))
+      (is (= (to-str (to-uri "//example.com/bar")) "//example.com/bar"))))
+  (testing "with base URL containing trailing slash"
+    (with-base-url "/foo/"
+      (is (= (to-str (to-uri "/bar")) "/foo/bar"))
+      (is (= (to-str (to-uri "http://example.com")) "http://example.com"))
+      (is (= (to-str (to-uri "https://example.com/bar")) "https://example.com/bar"))
+      (is (= (to-str (to-uri "bar")) "bar"))
+      (is (= (to-str (to-uri "../bar")) "../bar"))
+      (is (= (to-str (to-uri "//example.com/bar")) "//example.com/bar")))))
 
 (deftest test-url-encode
   (testing "strings"
