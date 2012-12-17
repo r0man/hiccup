@@ -5,7 +5,7 @@
   :source-paths ["src/clj"]
   :test-paths ["test/clj"]
   :plugins [[codox "0.6.3"]
-            [lein-cljsbuild "0.2.9"]]
+            [lein-cljsbuild "0.2.10"]]
   :codox {:exclude [hiccup.compiler]
           :src-dir-uri "http://github.com/weavejester/hiccup/blob/1.0.2"
           :src-linenum-anchor-prefix "L"}
