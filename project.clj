@@ -18,7 +18,8 @@
      :source-path "src/cljs"}
     {:compiler {:output-to "target/hiccup.js"
                 :optimizations :advanced
-                :pretty-print false}
+                :pretty-print false
+                :jar true}
      :source-path "src/cljs"}
     {:compiler {:output-to "target/hiccup-test.js"
                 :optimizations :advanced
