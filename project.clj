@@ -18,9 +18,9 @@
      :source-path "src/cljs"}
     {:compiler {:output-to "target/hiccup.js"
                 :optimizations :advanced
-                :pretty-print false
-                :jar true}
-     :source-path "src/cljs"}
+                :pretty-print false}
+     :source-path "src/cljs"
+     :jar true}
     {:compiler {:output-to "target/hiccup-test.js"
                 :optimizations :advanced
                 :pretty-print true}
