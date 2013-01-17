@@ -1,5 +1,5 @@
-(ns hiccup.compiler
-  (:use [hiccup.util :only [as-str escape-html]]))
+.(ns hiccup.compiler
+   (:use [hiccup.util :only [as-str escape-html]]))
 
 (def ^:dynamic *html-mode* :xml)
 
@@ -51,9 +51,12 @@
       [tag (merge tag-attrs map-attrs) (next content)]
       [tag tag-attrs content])))
 
-(defmulti render-html
-  "Turn a Clojure data type into a string of HTML."
-  type)
+(defprotocol IRender
+  (render-html [x]))
+
+;; (defmulti render-html
+;;   "Turn a Clojure data type into a string of HTML."
+;;   type)
 
 (defn- render-element
   "Render an element vector as a HTML element."
@@ -68,26 +71,48 @@
 (defn- render-seq [s]
   (apply str (map render-html s)))
 
-(defmethod render-html Cons [cons]
-  (render-seq cons))
+(extend-protocol IRender
 
-(defmethod render-html ChunkedSeq [chunked-seq]
-  (render-seq chunked-seq))
+  Cons
+  (render-html [cons]
+    (render-seq cons))
 
-(defmethod render-html LazySeq [lazy-seq]
-  (render-seq lazy-seq))
+  ChunkedSeq
+  (render-html [chunked-seq]
+    (render-seq chunked-seq))
 
-(defmethod render-html List [list]
-  (render-seq list))
+  LazySeq
+  (render-html [lazy-seq]
+    (render-seq lazy-seq))
 
-(defmethod render-html IndexedSeq [indexed-seq]
-  (render-seq indexed-seq))
+  List
+  (render-html [list]
+    (render-seq list))
 
-(defmethod render-html PersistentVector [persistent-vector]
-  (render-element persistent-vector))
+  IndexedSeq
+  (render-html [indexed-seq]
+    (render-seq indexed-seq))
 
-(defmethod render-html Vector [vector]
-  (render-element vector))
+  PersistentVector
+  (render-html [persistent-vector]
+    (render-element persistent-vector))
 
-(defmethod render-html :default [x]
-  (as-str x))
+  Vector
+  (render-html [vector]
+    (render-element vector))
+
+  number
+  (render-html [n]
+    (str n))
+
+  object
+  (render-html [x]
+    (str x))
+
+  string
+  (render-html [s]
+    s)
+
+  default
+  (render-html [x]
+    (str x)))
