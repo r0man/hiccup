@@ -25,6 +25,9 @@
                 :optimizations :advanced
                 :pretty-print true}
      :source-path "test/cljs"}]
+   :crossover-jar true
+   :crossover-path ".crossover-cljs"
+   :crossovers [hiccup.element]
    :repl-listen-port 9000
    :repl-launch-commands
    {"chromium" ["chromium" "http://localhost:9000/index.html"]

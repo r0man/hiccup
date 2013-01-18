@@ -15,3 +15,4 @@ pom.xml
 /.repl-phantom-out
 /pom.xml.asc
 /.lein-repl-history
+/.crossover-cljs

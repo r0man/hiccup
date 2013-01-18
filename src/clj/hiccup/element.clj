@@ -1,13 +1,14 @@
 (ns hiccup.element
   "Functions for creating HTML elements."
-  (:use [hiccup.def :only [defelem]]
-        [hiccup.util :only [to-uri]]))
+  (:require;*CLJSBUILD-REMOVE*;-macros
+   [hiccup.def :refer [defelem]])
+  (:require [hiccup.util :refer [to-uri]]))
 
 (defn javascript-tag
   "Wrap the supplied javascript up in script tags and a CDATA section."
   [script]
   [:script {:type "text/javascript"}
-    (str "//<![CDATA[\n" script "\n//]]>")])
+   (str "//<![CDATA[\n" script "\n//]]>")])
 
 (defelem link-to
   "Wraps some content in a HTML hyperlink with the supplied URL."
