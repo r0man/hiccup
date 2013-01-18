@@ -3,6 +3,9 @@
 
 (def ^:dynamic *html-mode* :xml)
 
+(defprotocol IRender
+  (render-html [x]))
+
 (defn- xml-mode? []
   (= *html-mode* :xml))
 
@@ -51,13 +54,6 @@
       [tag (merge tag-attrs map-attrs) (next content)]
       [tag tag-attrs content])))
 
-(defprotocol IRender
-  (render-html [x]))
-
-;; (defmulti render-html
-;;   "Turn a Clojure data type into a string of HTML."
-;;   type)
-
 (defn- render-element
   "Render an element vector as a HTML element."
   [element]
@@ -100,6 +96,10 @@
   Vector
   (render-html [vector]
     (render-element vector))
+
+  nil
+  (render-html [_]
+    nil)
 
   number
   (render-html [n]

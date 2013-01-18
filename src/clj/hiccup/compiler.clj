@@ -5,6 +5,9 @@
 
 (def ^:dynamic *html-mode* :xml)
 
+(defprotocol IRender
+  (render-html [x]))
+
 (defn- xml-mode? []
   (= *html-mode* :xml))
 
@@ -54,10 +57,6 @@
       [tag (merge tag-attrs map-attrs) (next content)]
       [tag tag-attrs content])))
 
-(defmulti render-html
-  "Turn a Clojure data type into a string of HTML."
-  type)
-
 (defn- render-element
   "Render an element vector as a HTML element."
   [element]
@@ -68,15 +67,23 @@
            "</" tag ">")
       (str "<" tag (render-attr-map attrs) (end-tag)))))
 
-(defmethod render-html IPersistentVector
-  [element]
-  (render-element element))
+(extend-protocol IRender
 
-(defmethod render-html ISeq [coll]
-  (apply str (map render-html coll)))
+  IPersistentVector
+  (render-html [v]
+    (render-element v))
 
-(defmethod render-html :default [x]
-  (as-str x))
+  ISeq
+  (render-html [coll]
+    (apply str (map render-html coll)))
+
+  Object
+  (render-html [x]
+    (as-str x))
+
+  nil
+  (render-html [_]
+    nil))
 
 (defn- unevaluated?
   "True if the expression has not been evaluated."
