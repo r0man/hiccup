@@ -13,5 +13,10 @@
          ~(apply compile-html content)))
     (apply compile-html options content)))
 
+(defmacro node
+  "Render ClojureScript data structures to a HTML node."
+  [options & content]
+  `(hiccup.core/fragment (hiccup.core/html ~options ~@content)))
+
 (def ^{:doc "Alias for hiccup.util/escape-html"}
   h escape-html)
