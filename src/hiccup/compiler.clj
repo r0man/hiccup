@@ -5,9 +5,6 @@
 
 (def ^:dynamic *html-mode* :xml)
 
-(defprotocol IRender
-  (render-html [x]))
-
 (defn- xml-mode? []
   (= *html-mode* :xml))
 
@@ -17,20 +14,20 @@
 (defn- xml-attribute [name value]
   (str " " (as-str name) "=\"" (escape-html value) "\""))
 
-(defn- render-attribute [[name value]]
+(defn render-attribute [[name value]]
   (cond
-   (true? value)
-   (if (xml-mode?)
-     (xml-attribute name name)
-     (str " " (as-str name)))
-   (not value)
-   ""
-   :else
-   (xml-attribute name value)))
+    (true? value)
+      (if (xml-mode?)
+        (xml-attribute name name)
+        (str " " (as-str name)))
+    (not value)
+      ""
+    :else
+      (xml-attribute name value)))
 
 (defn render-attr-map [attrs]
   (apply str
-         (sort (map render-attribute attrs))))
+    (sort (map render-attribute attrs))))
 
 (def ^{:doc "Regular expression that parses a CSS-style id and class from an element name."
        :private true}
@@ -57,6 +54,10 @@
       [tag (merge tag-attrs map-attrs) (next content)]
       [tag tag-attrs content])))
 
+(defprotocol HtmlRenderer
+  (render-html [this]
+    "Turn a Clojure data type into a string of HTML."))
+
 (defn- render-element
   "Render an element vector as a HTML element."
   [element]
@@ -67,23 +68,19 @@
            "</" tag ">")
       (str "<" tag (render-attr-map attrs) (end-tag)))))
 
-(extend-protocol IRender
-
+(extend-protocol HtmlRenderer
   IPersistentVector
-  (render-html [v]
-    (render-element v))
-
+  (render-html [this]
+    (render-element this))
   ISeq
-  (render-html [coll]
-    (apply str (map render-html coll)))
-
+  (render-html [this]
+    (apply str (map render-html this)))
   Object
-  (render-html [x]
-    (as-str x))
-
+  (render-html [this]
+    (str this))
   nil
-  (render-html [_]
-    nil))
+  (render-html [this]
+    ""))
 
 (defn- unevaluated?
   "True if the expression has not been evaluated."
@@ -155,16 +152,16 @@
   "Returns the compilation strategy to use for a given element."
   [[tag attrs & content :as element]]
   (cond
-   (every? literal? element)
-   ::all-literal                    ; e.g. [:span "foo"]
-   (and (literal? tag) (map? attrs))
-   ::literal-tag-and-attributes     ; e.g. [:span {} x]
-   (and (literal? tag) (not-implicit-map? attrs))
-   ::literal-tag-and-no-attributes  ; e.g. [:span ^String x]
-   (literal? tag)
-   ::literal-tag                    ; e.g. [:span x]
-   :else
-   ::default))                      ; e.g. [x]
+    (every? literal? element)
+      ::all-literal                    ; e.g. [:span "foo"]
+    (and (literal? tag) (map? attrs))
+      ::literal-tag-and-attributes     ; e.g. [:span {} x]
+    (and (literal? tag) (not-implicit-map? attrs))
+      ::literal-tag-and-no-attributes  ; e.g. [:span ^String x]
+    (literal? tag)
+      ::literal-tag                    ; e.g. [:span x]
+    :else
+      ::default))                      ; e.g. [x]
 
 (declare compile-seq)
 
