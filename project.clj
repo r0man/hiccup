@@ -2,29 +2,27 @@
   :description "A fast library for rendering HTML in Clojure"
   :url "http://github.com/weavejester/hiccup"
   :dependencies [[org.clojure/clojure "1.4.0"]]
-  :source-paths ["src/clj"]
-  :test-paths ["test/clj"]
+  :profiles {:dev {:dependencies [[com.cemerick/clojurescript.test "0.0.1"]]}}
   :plugins [[codox "0.6.3"]
-            [lein-cljsbuild "0.2.10"]]
+            [lein-cljsbuild "0.3.0"]]
+  :hooks [leiningen.cljsbuild]
   :codox {:exclude [hiccup.compiler]
           :src-dir-uri "http://github.com/weavejester/hiccup/blob/1.0.2"
           :src-linenum-anchor-prefix "L"}
-  :hooks [leiningen.cljsbuild]
   :cljsbuild
   {:builds
    [{:compiler {:output-to "target/hiccup-debug.js"
                 :optimizations :whitespace
                 :pretty-print true}
-     :source-path "src/cljs"}
+     :source-paths ["src"]}
     {:compiler {:output-to "target/hiccup.js"
                 :optimizations :advanced
                 :pretty-print false}
-     :source-path "src/cljs"
-     :jar true}
+     :source-paths ["src"]}
     {:compiler {:output-to "target/hiccup-test.js"
-                :optimizations :advanced
+                :optimizations :whitespace
                 :pretty-print true}
-     :source-path "test/cljs"}]
+     :source-paths ["test"]}]
    :crossover-jar true
    :crossover-path ".crossover-cljs"
    :crossovers [hiccup.element]
@@ -32,5 +30,4 @@
    :repl-launch-commands
    {"chromium" ["chromium" "http://localhost:9000/index.html"]
     "firefox" ["firefox" "http://localhost:9000/index.html"]}
-   :test-commands {"unit" ["./test-cljs.sh"]}}
-  :extra-classpath-dirs ["src/clj"])
+   :test-commands {"unit-tests" ["runners/phantomjs.js" "target/hiccup-test.js"]}})
