@@ -1,7 +1,12 @@
 (ns hiccup.test.core
   (:require-macros [cemerick.cljs.test :refer [is deftest testing]]
                    [hiccup.core :refer [html]])
-  (:require [cemerick.cljs.test :as t]))
+  (:require [cemerick.cljs.test :as t]
+            [goog.dom :as dom]
+            [hiccup.core :refer [fragment]]))
+
+(deftest test-fragment
+  (is (= "<div></div>" (dom/getOuterHtml (fragment "<div>")))))
 
 (deftest tag-names
   (testing "basic tags"

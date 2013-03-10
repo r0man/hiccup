@@ -5,6 +5,6 @@
 (def ^{:doc "Alias for hiccup.util/escape-html"}
   h escape-html)
 
-(defn render
-  "Render the HTML string as a document fragment."
-  [html] (dom/htmlToDocumentFragment html))
+(defn fragment
+  "Returns the HTML string `s` as a document fragment."
+  [s] (dom/htmlToDocumentFragment s))
