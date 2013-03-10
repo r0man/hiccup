@@ -1,4 +1,4 @@
-(defproject org.clojars.r0man/hiccup "1.0.3-SNAPSHOT"
+(defproject org.clojars.r0man/hiccup "1.0.4-SNAPSHOT"
   :description "A fast library for rendering HTML in Clojure"
   :url "http://github.com/weavejester/hiccup"
   :dependencies [[org.clojure/clojure "1.4.0"]]
