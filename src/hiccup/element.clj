@@ -2,7 +2,8 @@
   "Functions for creating HTML elements."
   (:require;*CLJSBUILD-REMOVE*;-macros
    [hiccup.def :refer [defelem]])
-  (:require [hiccup.util :refer [to-uri]]))
+  (:require [hiccup.def :refer [wrap-attrs]]
+            [hiccup.util :refer [to-uri]]))
 
 (defn javascript-tag
   "Wrap the supplied javascript up in script tags and a CDATA section."
