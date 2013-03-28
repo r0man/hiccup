@@ -2,8 +2,11 @@
   :description "A fast library for rendering HTML in Clojure"
   :url "http://github.com/weavejester/hiccup"
   :dependencies [[org.clojure/clojure "1.4.0"]]
-  :profiles {:dev {:dependencies [[com.cemerick/clojurescript.test "0.0.2"]]}}
-  :plugins [[codox "0.6.3"]
+  :profiles {:dev {:dependencies [[com.cemerick/clojurescript.test "0.0.2"]]}
+             :1.3 {:dependencies [[org.clojure/clojure "1.3.0"]]}
+             :1.4 {:dependencies [[org.clojure/clojure "1.4.0"]]}
+             :1.5 {:dependencies [[org.clojure/clojure "1.5.1"]]}}
+  :plugins [[codox "0.6.4"]
             [lein-cljsbuild "0.3.0"]]
   :hooks [leiningen.cljsbuild]
   :codox {:exclude [hiccup.compiler]
